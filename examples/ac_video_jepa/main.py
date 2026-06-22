@@ -207,6 +207,7 @@ def run(
         std_coeff=cfg.model.regularizer.std_coeff,
         sim_coeff_t=cfg.model.regularizer.sim_coeff_t,
         idm_coeff=cfg.model.regularizer.get("idm_coeff", 0.1),
+        std_margin=cfg.model.regularizer.get("std_margin", 1.0),
         idm=idm,
         first_t_only=cfg.model.regularizer.get("first_t_only"),
         projector=projector,

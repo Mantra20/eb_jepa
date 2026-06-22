@@ -32,6 +32,10 @@ def init_data(env_name, cfg_data=None, **kwargs):
     Returns:
         Tuple of (train_loader, val_loader, config).
     """
+    if env_name == "bounce2d":
+        from bounce2d_ebjepa import build_bounce2d_loaders
+        return build_bounce2d_loaders(cfg_data)
+
     if env_name != "two_rooms":
         raise ValueError(f"Unknown env: {env_name}. Only 'two_rooms' is supported.")
 
