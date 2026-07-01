@@ -1,0 +1,77 @@
+logging:
+  log_wandb: false
+  wandb_group: null
+  wandb_sweep: null
+  log_every: 10
+  exp_suffix: 26-01-15
+  save_every_n_epochs: 10
+  tqdm_silent: false
+meta:
+  model_folder: /content/drive/MyDrive/bounce2d_runs/ablation_simt0_seed1
+  load_model: false
+  enable_plan_eval: false
+  eval_every_itr: -1
+  light_eval_freq: 50
+  seed: 1
+data:
+  env_name: bounce2d
+  batch_size: 256
+  num_workers: 2
+  pin_mem: false
+  persistent_workers: false
+  img_size: 65
+  T: 16
+  n_base: 4000
+training:
+  use_amp: true
+  dtype: bfloat16
+model:
+  compile: false
+  dobs: 2
+  henc: 32
+  hpre: 32
+  dstc: 32
+  nsteps: 8
+  encoder_architecture: impala
+  train_rollout: last
+  encoder_skip_connections: true
+  predictor_skip_connections: true
+  regularizer:
+    cov_coeff: 12
+    std_coeff: 16
+    sim_coeff_t: 0
+    idm_coeff: 0
+    first_t_only: false
+    spatial_as_samples: false
+    use_proj: false
+    idm_after_proj: false
+    sim_t_after_proj: false
+    std_margin: 2.0
+optim:
+  epochs: 100
+  lr: 0.001
+  grad_clip_enc: 2.0
+  grad_clip_pred: 2.0
+  weight_decay: 1.0e-05
+eval:
+  plan_cfg_path: examples/ac_video_jepa/cfgs/planning_mppi.yaml
+  eval_cfg_path: examples/ac_video_jepa/cfgs/eval.yaml
+sweep:
+  param_grid:
+    model.regularizer.cov_coeff:
+    - 8
+    - 12
+    model.regularizer.std_coeff:
+    - 8
+    - 16
+    model.regularizer.sim_coeff_t:
+    - 8
+    - 12
+    - 16
+    model.regularizer.idm_coeff:
+    - 1
+    - 2
+    meta.seed:
+    - 1
+    - 1000
+    - 10000
