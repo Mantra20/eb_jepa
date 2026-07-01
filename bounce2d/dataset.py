@@ -8,7 +8,7 @@ VIOLATION_KINDS = ["teleport", "phantom_bounce", "energy_gain", "energy_loss"]
 
 
 def build_dataset(n_base=2000, T=16, paired=False, kinds=VIOLATION_KINDS,
-                  box=1.0, radius=0.06, mass=1.0, speed_range=(0.02, 0.06),
+                  box=1.0, radius=0.06, mass=1.0, speed_range=(0.02, 0.10),
                   t_violation_range=None, intensity=1.6, S=65, seed0=0):
     if t_violation_range is None:
         t_violation_range = (T // 4, 3 * T // 4)

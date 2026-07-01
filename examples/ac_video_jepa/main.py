@@ -433,6 +433,15 @@ def run(
 
         epoch_time = time() - epoch_start_time
 
+        with torch.no_grad():
+            _z = jepa.encoder(x)
+            _zt = _z.reshape(_z.shape[0], _z.shape[1], _z.shape[2]).float()
+            _zf = _zt.permute(0,2,1).reshape(-1, _zt.shape[1])
+            _zc = _zf - _zf.mean(0, keepdim=True)
+            _sv = torch.linalg.svdvals((_zc.T @ _zc) / (_zc.shape[0]-1))
+            _pp = _sv / (_sv.sum() + 1e-12)
+            _eff_rank = float(torch.exp(-(_pp * torch.log(_pp + 1e-12)).sum()))
+            _temp_var = float(_zt.var(dim=2, unbiased=False).mean() / (_zf.var(dim=0, unbiased=False).mean() + 1e-12))
         # Log epoch summary
         log_epoch(
             epoch,
@@ -441,6 +450,11 @@ def run(
                 "reg": regl.item(),
                 "pred": pl.item(),
                 "probe": xy_loss.item(),
+                "eff_rank": _eff_rank,
+                "temp_var": _temp_var,
+                "sim_loss": regldict.get("sim_loss_t", 0.0),
+                "std_loss": regldict.get("std_loss", 0.0),
+                "cov_loss": regldict.get("cov_loss", 0.0),
             },
             total_epochs=cfg.optim.epochs,
             elapsed_time=epoch_time,

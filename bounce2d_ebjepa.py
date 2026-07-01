@@ -64,7 +64,9 @@ def build_bounce2d_loaders(cfg_data):
     nw = int(cfg.get("num_workers", 0))
     pin = bool(cfg.get("pin_mem", False))
     persist = bool(cfg.get("persistent_workers", False)) and nw > 0
-    sr = tuple(cfg.get("speed_range", (0.02, 0.06)))
+    import os as _os
+    sr = (float(_os.environ.get("BOUNCE_SPEED_MIN", cfg.get("speed_range", (0.02, 0.10))[0])),
+          float(_os.environ.get("BOUNCE_SPEED_MAX", cfg.get("speed_range", (0.02, 0.10))[1])))
 
     train = Bounce2DDataset(build_dataset(n_base=n_base, T=T, paired=False, S=img,
                                           speed_range=sr, seed0=0))

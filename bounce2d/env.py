@@ -7,7 +7,7 @@ import numpy as np
 
 class BounceEnv:
     def __init__(self, box=1.0, radius=0.06, mass=1.0, dt=1.0,
-                 speed_range=(0.02, 0.06), rng=None):
+                 speed_range=(0.02, 0.10), rng=None):
         self.box, self.r, self.m, self.dt = box, radius, mass, dt
         self.speed_range = speed_range
         self.rng = rng if rng is not None else np.random.default_rng()

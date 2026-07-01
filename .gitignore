@@ -229,3 +229,6 @@ eb_jepa_ICLR/
 arxiv/
 arxiv_tmp/
 CLAUDE.md
+
+# bounce2D generated data
+bounce2d_eval.npz

@@ -10,7 +10,7 @@ KIND_ID = {"normal": 0, "teleport": 1, "phantom_bounce": 2,
 
 
 def generate_trajectory(seed, T, kind="normal", t_violation=None, intensity=1.6,
-                        box=1.0, radius=0.06, mass=1.0, speed_range=(0.02, 0.06)):
+                        box=1.0, radius=0.06, mass=1.0, speed_range=(0.02, 0.10)):
     env = BounceEnv(box=box, radius=radius, mass=mass,
                     speed_range=speed_range, rng=np.random.default_rng(seed))
     env.reset()
